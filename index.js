@@ -7,21 +7,12 @@ import Article from './models/article';
 const PORT = 3000;
 mongoose.connect('mongodb://localhost/store');
 
-// var book = new Article({
-//     _id: uuid(),
-//     title: 'Las mil y una noches',
-// });
-
-// book.save().then(doc => {
-//     console.log(doc);
-// });
-
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/articles', async (req, res) => {
-    const query = {};
+    const query = { deleted_at: undefined };
     const { title, authors } = req.query;
 
     if (title) query.title = { $regex: title, $options: 'i' };
