@@ -3,10 +3,10 @@ const { Schema } = mongoose;
 
 var articleSchema = new Schema({
     _id: { type: String, required: true, unique: true },
-    title: String,
+    title: { type: String, required: true },
     short_description: String,
     long_description: String,
-    created_at: Date,
+    created_at: { type: Date, required: true },
     updated_at: Date,
     deleted_at: Date,
 });
