@@ -4,7 +4,8 @@ import bodyParser from 'body-parser';
 import uuid from 'uuid';
 
 import { isNullOrUndefined } from './utils';
-import Article from './models/article';
+import Article from './src/models/article';
+import authorRouter from './src/routers/authors';
 
 const PORT = 3001;
 mongoose.connect('mongodb://localhost/store', { useFindAndModify: false });
@@ -19,6 +20,8 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+
+app.use('/authors', authorRouter);
 
 app.get('/articles', async (req, res) => {
     try {
