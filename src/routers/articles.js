@@ -12,6 +12,7 @@ router.get('/', async (req, res) => {
         const { title, authors } = req.query;
 
         if (title) query.title = { $regex: title, $options: 'i' };
+        if (authors) query.authors = { $in: authors.split(',') };
 
         const response = await Article.find(query);
         res.send(response);
@@ -71,13 +72,14 @@ router.put('/:id', async (req, res) => {
         res.status(400).send('id is required for this operation');
         return;
     }
-    const { title, short_description, long_description } = req.body;
+    const { title, short_description, long_description, authors } = req.body;
     try {
         const now = new Date();
         const updateFields = { updated_at:now };
         if (!isNullOrUndefined(title)) updateFields.title = title;
         if (!isNullOrUndefined(short_description)) updateFields.short_description = short_description;
         if (!isNullOrUndefined(long_description)) updateFields.long_description = long_description;
+        if (!isNullOrUndefined(authors)) updateFields.authors = authors;
         
         const response = await Article.findOneAndUpdate({ "_id": id }, updateFields, { new: true });
         res.send(response);

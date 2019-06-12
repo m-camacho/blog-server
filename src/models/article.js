@@ -6,7 +6,8 @@ var articleSchema = new Schema({
     title: { type: String, required: true },
     short_description: String,
     long_description: String,
-    created_at: { type: Date, required: true },
+    authors: [String],
+    created_at: Date,
     updated_at: Date,
     deleted_at: Date,
 });
