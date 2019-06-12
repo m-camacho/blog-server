@@ -42,7 +42,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { title, short_description, long_description } = req.body;
+    const { title, short_description, long_description, authors } = req.body;
     if (isNullOrUndefined(title)) {
         res.status(400).send('title is required for this operation');
         return;
@@ -57,7 +57,8 @@ router.post('/', async (req, res) => {
         });
         if (!isNullOrUndefined(short_description)) article.short_description = short_description;
         if (!isNullOrUndefined(long_description)) article.long_description = long_description;
-        
+        if (!isNullOrUndefined(authors)) article.authors = authors;
+
         const response = await article.save();
         res.send(response);
     } catch(error) {
